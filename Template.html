@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>원스휴먼 무기/방어구 세팅</title>
+    <style>
+        /* 기본 스타일 초기화 및 폰트 설정 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+        
+        .img-weapon, .img-armor{width: 100%; height: 100%;}
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #333;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* 전체 레이아웃 컨테이너 */
+        .main-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap; /* 화면이 좁아지면 줄바꿈 */
+            justify-content: center;
+        }
+
+        /* 왼쪽 무기 섹션 */
+        .weapon-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 350px;
+        }
+
+        /* 오른쪽 방어구 섹션 */
+        .armor-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 300px;
+        }
+
+        /* 개별 무기 아이템 (사진 + 모듈/튜닝) */
+        .weapon-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        /* 모듈과 튜닝을 묶는 컨테이너 */
+        .module-tuning-container {
+            display: flex;
+            gap: 5px;
+            height: 80px;
+        }
+
+        /* 이미지 컨테이너 (호버 효과의 기준점) */
+        .image-container {
+            position: relative; /* 설명창(tooltip)의 위치 기준 */
+            cursor: pointer;
+            overflow: hidden; /* 컨테이너를 벗어나는 컨텐츠 숨김 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        
+        /* 실제 이미지 스타일 (주석 해제 후 사용) */
+        /* .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        */
+
+        /* 설명창(tooltip) 기본 스타일 - 평소에는 숨김 */
+        .tooltip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            opacity: 0; /* 평소에는 투명하게 */
+            transition: opacity 0.3s ease; /* 부드러운 효과 */
+            box-sizing: border-box;
+        }
+
+        /* 이미지 컨테이너에 마우스를 올리면 설명창 보이기 */
+        .image-container:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* === 색상 및 크기별 스타일 === */
+
+        /* 파란색 상자 (사진) */
+        .box-blue { background-color: #2c3e50; }
+        .weapon-photo { height: 180px; }
+        .armor-photo { flex: 3; } /* 비율로 너비 조절 */
+
+        /* 노란색 상자 (모듈) */
+        .box-yellow { background-color: #f39c12; }
+        .weapon-module { flex-grow: 1; }
+        .armor-module { flex: 1; }
+
+        /* 빨간색 상자 (튜닝) */
+        .box-red {
+            background-color: #e74c3c;
+            flex-basis: 80px; /* 고정 너비 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        /* 방어구 세팅 타이틀 */
+        .armor-title {
+            background-color: #525252;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        /* 개별 방어구 아이템 (사진 + 모듈) */
+        .armor-item {
+            display: flex;
+            gap: 10px;
+            height: 80px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="weapon-section">
+            <div class="weapon-item">
+                <div class="image-container box-blue weapon-photo" style="background-image: url(원스휴먼/weapon/Category/원더러.jpg);">
+                    <img class="img-weapon" src="원스휴먼/weapon/AssaultRifles/icon_v4_blueprint_ar_scar_sr1.png" alt="" srcset="">
+                    <div class="tooltip">SOCR -</div>
+                </div>
+                <div class="module-tuning-container">
+                    <div class="image-container box-yellow weapon-module">
+                        <img src="원스휴먼/mod/유산탄/icon_mods_cbt2_sdbjtsrdjd_d.png" alt="" srcset="">
+                        <div class="tooltip">완전격파 - 격렬</div>
+                    </div>
+                    <div class="box-red">정크크</div>
+                </div>
+            </div>
+
+            <div class="weapon-item">
+                <div class="image-container box-blue weapon-photo" style="background-image: url(원스휴먼/weapon/Category/원더러.jpg);">
+                    <img class="img-weapon" src="원스휴먼/weapon/HandGun/icon_v4_blueprint_deserteagle_sr_01.png" alt="" srcset="">
+                    <div class="tooltip">보조무기에 대한 상세 설명이 여기에 표시됩니다.</div>
+                </div>
+                <div class="module-tuning-container">
+                    <div class="image-container box-yellow weapon-module">
+                        <img src="원스휴먼/mod/헌터/icon_mods_cbt2_lrbjks_d.png" alt="" srcset="">
+                        <div class="tooltip">장착된 보조무기 모듈에 대한 설명입니다.</div>
+                    </div>
+                    <div class="box-red">간크크</div>
+                </div>
+            </div>
+
+            <div class="weapon-item">
+                <div class="image-container box-blue weapon-photo" style="background-image: url(원스휴먼/weapon/Category/원더러.jpg);">
+                    <img class="img-weapon" src="원스휴먼/weapon/Blade/icon_blueprint_sr_khukuri_01.png" alt="" srcset="">
+                    <div class="tooltip">근접무기에 대한 상세 설명이 여기에 표시됩니다.</div>
+                </div>
+                <div class="module-tuning-container">
+                    <div class="image-container box-yellow weapon-module">
+                        <img src="원스휴먼/mod/포트리스워페어/icon_mods_cbt2_zzzdtlsc_d.png" alt="" srcset="">
+                        <div class="tooltip">장착된 근접무기 모듈에 대한 설명입니다.</div>
+                    </div>
+                    <div class="box-red">라크크</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="armor-section">
+            <div class="armor-title">방어구 세팅 1,2,3</div>
+
+            <div class="armor-item">
+                <div class="image-container box-blue armor-photo" style="background-image: url(원스휴먼/weapon/Category/비욘드.jpg);">
+                    <img class="img-armor" src="원스휴먼/armor/Helmet/icon_v4_equip_blueprint_m_cap16.png" alt="" srcset="">
+                    <div class="tooltip">모자 방어구에 대한 설명입니다.</div>
+                </div>
+                <div class="image-container box-yellow armor-module">
+                    모듈
+                    <div class="tooltip">모자에 장착된 모듈 설명입니다.</div>
+                </div>
+            </div>
+            
+            <div class="armor-item">
+                <div class="image-container box-blue armor-photo" style="background-image: url(원스휴먼/weapon/Category/비욘드.jpg);">
+                    <img class="img-armor" src="원스휴먼/armor/Mask/icon_v4_equip_blueprint_m_mask04.png" alt="" srcset="">
+                    <div class="tooltip">마스크 방어구에 대한 설명입니다.</div>
+                </div>
+                <div class="image-container box-yellow armor-module">
+                    모듈
+                    <div class="tooltip">마스크에 장착된 모듈 설명입니다.</div>
+                </div>
+            </div>
+
+            <div class="armor-item">
+                <div class="image-container box-blue armor-photo" style="background-image: url(원스휴먼/weapon/Category/비욘드.jpg);">
+                    <img class="img-armor" src="원스휴먼/armor/Top/icon_v4_equip_blueprint_m_coat47 (1).png" alt="" srcset="">
+                    <div class="tooltip">상의 방어구에 대한 설명입니다.</div>
+                </div>
+                <div class="image-container box-yellow armor-module">
+                    모듈
+                    <div class="tooltip">상의에 장착된 모듈 설명입니다.</div>
+                </div>
+            </div>
+
+            <div class="armor-item">
+                <div class="image-container box-blue armor-photo" style="background-image: url(원스휴먼/weapon/Category/비욘드.jpg);">
+                    <img class="img-armor" src="원스휴먼/armor/bottom/icon_v4_equip_blueprint_m_pants24_v2.png" alt="" srcset="">
+                    <div class="tooltip">하의 방어구에 대한 설명입니다.</div>
+                </div>
+                <div class="image-container box-yellow armor-module">
+                    모듈
+                    <div class="tooltip">하의에 장착된 모듈 설명입니다.</div>
+                </div>
+            </div>
+            
+            <div class="armor-item">
+                <div class="image-container box-blue armor-photo" style="background-image: url(원스휴먼/weapon/Category/비욘드.jpg);">
+                    <img class="img-armor" src="원스휴먼/armor/shoes/폴른월드서지.png" alt="" srcset="">
+                    <div class="tooltip">신발 방어구에 대한 설명입니다.</div>
+                </div>
+                <div class="image-container box-yellow armor-module">
+                    모듈
+                    <div class="tooltip">신발에 장착된 모듈 설명입니다.</div>
+                </div>
+            </div>
+
+            <div class="armor-item">
+                <div class="image-container box-blue armor-photo" style="background-image: url(원스휴먼/weapon/Category/비욘드.jpg);">
+                    <img class="img-armor" src="원스휴먼/armor/gloves/폴른월드서지.png" alt="" srcset="">
+                    <div class="tooltip">장갑 방어구에 대한 설명입니다.</div>
+                </div>
+                <div class="image-container box-yellow armor-module">
+                    모듈
+                    <div class="tooltip">장갑에 장착된 모듈 설명입니다.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

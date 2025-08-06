@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset.css">
+    <title>게임 아이템 목록 UI</title>
+    <style>
+        /* 전체 페이지 스타일 */
+        body {
+            background-color: #12141d; /* 어두운 남색 배경 */
+            color: #e0e0e0; /* 기본 텍스트 색상 */
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            padding: 20px;
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        /* 섹션 제목 */
+        .section-title {
+            font-size: 1.1em;
+            font-weight: normal;
+            color: #b0b8c4;
+            border-bottom: 1px solid #33384a;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* 아이템 그리드 */
+        .item-grid {
+            display: grid;
+            /* 4개의 열을 만들고, 각 열의 너비를 동일하게 설정 */
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 15px; /* 아이템 카드 사이의 간격 */
+        }
+        
+        /* 카드 위에 마우스를 올렸을 때 효과 */
+        .item-card:hover {
+            border-color: #8a99b3;
+            cursor: pointer;
+        }
+        /* 기준점 역할을 하는 컨테이너 */
+        .image-container {
+            position: relative;
+            display: inline-block;
+            overflow: hidden; /* 컨테이너 밖으로 나가는 요소 숨기기 (선택 사항) */
+            border-radius: 6px; /* 부드러운 모서리 */
+        }
+
+        /* 툴팁의 기본 스타일 (평소에는 숨겨진 상태) */
+        .tooltip {
+            /* 시각적으로 완전히 숨김 */
+            opacity: 0;
+            visibility: hidden;
+            
+            /* 컨테이너 전체를 덮도록 위치 설정 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            /* 배경 스타일 */
+            background-color: rgba(0, 0, 0, 0.7); /* 더 어두운 반투명 검은 배경 */
+            color: white;
+            
+            /* 텍스트를 수직/수평 중앙 정렬 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            /* 텍스트 꾸미기 */
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 10px;
+            box-sizing: border-box; /* 패딩이 크기에 영향을 주지 않도록 설정 */
+            
+            /* 부드러운 애니메이션 효과 */
+            transition: opacity 0.3s ease;
+        }
+
+        /* image-container에 마우스를 올렸을 때(hover) 툴팁을 보이게 함 */
+        .image-container:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- 아래는 꾸미기용 기존 코드 --- */
+        .item-card img {
+            display: block; /* 이미지 아래 불필요한 공백 제거 */
+            width: 100%;
+            background-image: var(--gradient), var(--image-url);
+        }
+
+
+        .menuBar{display: flex; height: 40px; width: 100%;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;}
+        .menuItem{width: 10%; text-align: center;}
+
+        .yellow {--gradient: linear-gradient(to top, rgba(177, 139, 0, 0.25), rgba(250, 204, 21, 0));}
+        .purple {--gradient: linear-gradient(to top, rgba(192, 132, 252,  0.25), rgba(250, 204, 21, 0));}
+        .blue {--gradient: linear-gradient(to top, rgba(96, 165, 250, 0.25), rgba(250, 204, 21, 0));}
+        .green {--gradient: linear-gradient(to top, rgba(74, 222, 128, 0.25), rgba(250, 204, 21, 0));}
+
+        .Beyonder {--image-url: url(OnceHuman/weapon/Category/Beyonder.jpg);}
+        .Stranger {--image-url: url(OnceHuman/weapon/Category/Stranger.jpg);}
+        .Waderer {--image-url: url(OnceHuman/weapon/Category/Waderer.jpg);}
+        .Juggernaut {--image-url: url(OnceHuman/weapon/Category/Juggernaut.jpg);}
+        .Huntsman {--image-url: url(OnceHuman/weapon/Category/Huntsman.jpg);}
+        .Operator {--image-url: url(OnceHuman/weapon/Category/Operator.jpg);}
+    </style>
+</head>
+<body>
+
+
+
+<div class="container">
+    <div class="menuBar">
+        <div class="menuItem"><a href="">전체</a></div>
+        <div class="menuItem"><a href="">권총</a></div>
+        <div class="menuItem"><a href="">샷건</a></div>
+        <div class="menuItem"><a href="">기관단총</a></div>
+        <div class="menuItem"><a href="">소총</a></div>
+        <div class="menuItem"><a href="">저격소총</a></div>
+        <div class="menuItem"><a href="">경기관총</a></div>
+        <div class="menuItem"><a href="">석궁</a></div>
+        <div class="menuItem"><a href="">대형화기</a></div>
+        <div class="menuItem"><a href="">근접</a></div>
+    </div>
+
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 권총 - 데저트이글</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Beyonder">
+                            <img src="OnceHuman/weapon/HG/DE1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">데저트이글 - 백상아리</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Beyonder">
+                            <img src="OnceHuman/weapon/HG/DE2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">DE.50 - 블루 플레임</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card green Waderer" >
+                            <img src="OnceHuman/weapon/HG/DE3.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">데저트이글</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 권총 - 리볼버</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Operator" >
+                            <img src="OnceHuman/weapon/HG/RE1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Beyonder" >
+                            <img src="OnceHuman/weapon/HG/RE2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Waderer" >
+                            <img src="OnceHuman/weapon/HG/RE3.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 권총 - 글록</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Waderer" >
+                            <img src="OnceHuman/weapon/HG/Glock1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Operator" >
+                            <img src="OnceHuman/weapon/HG/Glock2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 산탄총 - 더블배럴</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Huntsman" >
+                            <img src="OnceHuman/weapon/SG/DB1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Juggernaut" >
+                            <img src="OnceHuman/weapon/SG/DB2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Huntsman" >
+                            <img src="OnceHuman/weapon/SG/DB3.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card green Huntsman" >
+                            <img src="OnceHuman/weapon/SG/DB4.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 산탄총 - M870</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Huntsman" >
+                            <img src="OnceHuman/weapon/SG/M8701.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 산탄총 - DP12</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Juggernaut" >
+                            <img src="OnceHuman/weapon/SG/DP121.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Beyonder" >
+                            <img src="OnceHuman/weapon/SG/DP122.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 산탄총 - AA12</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Waderer" >
+                            <img src="OnceHuman/weapon/SG/AA121.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Juggernaut" >
+                            <img src="OnceHuman/weapon/SG/AA122.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Waderer" >
+                            <img src="OnceHuman/weapon/SG/AA123.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 기관단총 - MP7</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Stranger" >
+                            <img src="OnceHuman/weapon/SMG/MP71.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Stranger" >
+                            <img src="OnceHuman/weapon/SMG/MP72.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card green Operator" >
+                            <img src="OnceHuman/weapon/SMG/MP73.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 기관단총 - MP5</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Stranger" >
+                            <img src="OnceHuman/weapon/SMG/MP51.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Juggernaut" >
+                            <img src="OnceHuman/weapon/SMG/MP52.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Operator" >
+                            <img src="OnceHuman/weapon/SMG/MP53.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 기관단총 - 버텍스</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Beyonder" >
+                            <img src="OnceHuman/weapon/SMG/Ver1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Operator" >
+                            <img src="OnceHuman/weapon/SMG/Ver2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 소총 - AKM</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Stranger" >
+                            <img src="OnceHuman/weapon/AR/AKM1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Juggernaut" >
+                            <img src="OnceHuman/weapon/AR/AKM2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Waderer" >
+                            <img src="OnceHuman/weapon/AR/AKM3.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card green Waderer" >
+                            <img src="OnceHuman/weapon/AR/AKM4.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 소총 - SCAR</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Beyonder" >
+                            <img src="OnceHuman/weapon/AR/scar1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Stranger" >
+                            <img src="OnceHuman/weapon/AR/scar2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 아웃사이더</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 소총 - M416</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Waderer" >
+                            <img src="OnceHuman/weapon/AR/M4161.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Beyonder" >
+                            <img src="OnceHuman/weapon/AR/M4162.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Juggernaut" >
+                            <img src="OnceHuman/weapon/AR/M4163.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 저격소총 - M700</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Stranger" >
+                            <img src="OnceHuman/weapon/SR/M7001.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card green Huntsman" >
+                            <img src="OnceHuman/weapon/SR/M7002.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 저격소총 - AWM</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Huntsman" >
+                            <img src="OnceHuman/weapon/SR/AWM1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Huntsman" >
+                            <img src="OnceHuman/weapon/SR/AWM2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 저격소총 - M821A1</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Operator" >
+                            <img src="OnceHuman/weapon/SR/M82A11.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Juggernaut" >
+                            <img src="OnceHuman/weapon/SR/M82A12.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 경기관총 - MG4</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Operator" >
+                            <img src="OnceHuman/weapon/LMG/MG41.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Beyonder" >
+                            <img src="OnceHuman/weapon/LMG/MG42.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Juggernaut" >
+                            <img src="OnceHuman/weapon/LMG/MG43.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Waderer" >
+                            <img src="OnceHuman/weapon/LMG/MG44.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card green Operator" >
+                            <img src="OnceHuman/weapon/LMG/MG45.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 경기관총 - KVD</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Juggernaut" >
+                            <img src="OnceHuman/weapon/LMG/KVD1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Operator" >
+                            <img src="OnceHuman/weapon/LMG/KVD2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 석궁 - 쇠뇌</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Huntsman" >
+                            <img src="OnceHuman/weapon/CrossBow/CB1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Operator" >
+                            <img src="OnceHuman/weapon/CrossBow/CB2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Huntsman" >
+                            <img src="OnceHuman/weapon/CrossBow/CB3.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card green Huntsman" >
+                            <img src="OnceHuman/weapon/CrossBow/CB4.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 석궁 - 활</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Huntsman" >
+                            <img src="OnceHuman/weapon/CrossBow/BOW.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 대형 화기</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Waderer" >
+                            <img src="OnceHuman/weapon/HA/HA1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Operator" >
+                            <img src="OnceHuman/weapon/HA/HA2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 근접 - 도검</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Juggernaut" >
+                            <img src="OnceHuman/weapon/Melee/BL1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Waderer" >
+                            <img src="OnceHuman/weapon/Melee/BL2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Huntsman" >
+                            <img src="OnceHuman/weapon/Melee/BL3.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 근접 - 곤봉</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Huntsman" >
+                            <img src="OnceHuman/weapon/Melee/BM1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Operator" >
+                            <img src="OnceHuman/weapon/Melee/BM2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Huntsman" >
+                            <img src="OnceHuman/weapon/Melee/BM3.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Waderer" >
+                            <img src="OnceHuman/weapon/Melee/BM4.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card green Waderer" >
+                            <img src="OnceHuman/weapon/Melee/BM5.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!--  -->
+    <div class="section">
+        <h2 class="section-title">| 근접 - 대형 무기</h2>
+        <div class="item-grid">
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card yellow Waderer" >
+                            <img src="OnceHuman/weapon/Melee/BA1.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card purple Juggernaut" >
+                            <img src="OnceHuman/weapon/Melee/BA2.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <a href="Template.html">
+                    <div class="image-container">
+                        <div class="item-card blue Waderer" >
+                            <img src="OnceHuman/weapon/Melee/BA3.png" alt="" style="width: 100%;" >
+                        </div>
+                        <div class="tooltip">SOCR - 마지막 용기</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
