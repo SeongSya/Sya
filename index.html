@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="reset.css">
-    <title>게임 아이템 목록 UI</title>
+    <title>OnceHumanWeaponList</title>
     <style>
         /* 전체 페이지 스타일 */
         body {
@@ -16,18 +16,44 @@
 
         /* 컨테이너 */
         .container {
-            max-width: 1800px;
+            max-width: 80%;
             margin: 0 auto;
         }
 
         /* 섹션 제목 */
         .section-title {
-            font-size: 1.1em;
-            font-weight: normal;
-            color: #b0b8c4;
-            border-bottom: 1px solid #33384a;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #e0e0e0;
+            background: linear-gradient(90deg, #8a99b3, #b0b8c4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border-left: 4px solid #8a99b3;
+            padding: 12px 0 12px 15px;
+            margin: 25px 0 20px 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(45deg, #8a99b3, #b0b8c4);
+            border-radius: 0 2px 2px 0;
+        }
+        
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, #33384a, transparent);
+            margin-left: 15px;
         }
 
         /* 아이템 그리드 */
@@ -94,11 +120,18 @@
             display: block; /* 이미지 아래 불필요한 공백 제거 */
             width: 100%;
             background-image: var(--gradient), var(--image-url);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            object-fit: contain;
         }
 
 
-        .menuBar{display: flex; height: 40px; width: 100%;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;}
-        .menuItem{width: 10%; text-align: center;}
+        .menuBar{display: flex; height: 60px; width: 100%; flex-wrap: nowrap; align-content: center; justify-content: center; align-items: center; margin: 30px 0; gap: 15px; padding: 0 20px;}
+        .menuItem{width: 60px; height: 60px; text-align: center; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; border: 2px solid transparent;}
+        .menuItem img{width: 40px; height: 40px; object-fit: contain;}
+        .menuItem:hover{background-color: #33384a; border-color: #8a99b3;}
+        .menuItem.active{background-color: rgba(138, 153, 179, 0.3); color: #12141d; border-color: #8a99b3;}
 
         .yellow {--gradient: linear-gradient(to top, rgba(177, 139, 0, 0.25), rgba(250, 204, 21, 0));}
         .purple {--gradient: linear-gradient(to top, rgba(192, 132, 252,  0.25), rgba(250, 204, 21, 0));}
@@ -119,21 +152,21 @@
 
 <div class="container">
     <div class="menuBar">
-        <div class="menuItem"><a href="">전체</a></div>
-        <div class="menuItem"><a href="">권총</a></div>
-        <div class="menuItem"><a href="">샷건</a></div>
-        <div class="menuItem"><a href="">기관단총</a></div>
-        <div class="menuItem"><a href="">소총</a></div>
-        <div class="menuItem"><a href="">저격소총</a></div>
-        <div class="menuItem"><a href="">경기관총</a></div>
-        <div class="menuItem"><a href="">석궁</a></div>
-        <div class="menuItem"><a href="">대형화기</a></div>
-        <div class="menuItem"><a href="">근접</a></div>
+        <div class="menuItem active" data-category="전체"><img src="OnceHuman/weapon/WeaponCate/All.png" alt=""></div>
+        <div class="menuItem" data-category="권총"><img src="OnceHuman/weapon/WeaponCate/HG.png" alt=""></div>
+        <div class="menuItem" data-category="샷건"><img src="OnceHuman/weapon/WeaponCate/SG.png" alt=""></div>
+        <div class="menuItem" data-category="기관단총"><img src="OnceHuman/weapon/WeaponCate/SMG.png" alt=""></div>
+        <div class="menuItem" data-category="소총"><img src="OnceHuman/weapon/WeaponCate/AR.png" alt=""></div>
+        <div class="menuItem" data-category="저격소총"><img src="OnceHuman/weapon/WeaponCate/SR.png" alt=""></div>
+        <div class="menuItem" data-category="경기관총"><img src="OnceHuman/weapon/WeaponCate/LMG.png" alt=""></div>
+        <div class="menuItem" data-category="석궁"><img src="OnceHuman/weapon/WeaponCate/CB.png" alt=""></div>
+        <div class="menuItem" data-category="대형화기"><img src="OnceHuman/weapon/WeaponCate/HA.png" alt=""></div>
+        <div class="menuItem" data-category="근접"><img src="OnceHuman/weapon/WeaponCate/Melee.png" alt=""></div>
     </div>
 
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 권총 - 데저트이글</h2>
+    <div class="section" data-category="권총">
+        <h2 class="section-title">권총 - 데저트이글</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -171,8 +204,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 권총 - 리볼버</h2>
+    <div class="section" data-category="권총">
+        <h2 class="section-title">권총 - 리볼버</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -209,8 +242,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 권총 - 글록</h2>
+    <div class="section" data-category="권총">
+        <h2 class="section-title">권총 - 글록</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -237,8 +270,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 산탄총 - 더블배럴</h2>
+    <div class="section" data-category="샷건">
+        <h2 class="section-title">산탄총 - 더블배럴</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -285,8 +318,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 산탄총 - M870</h2>
+    <div class="section" data-category="샷건">
+        <h2 class="section-title">산탄총 - M870</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -303,8 +336,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 산탄총 - DP12</h2>
+    <div class="section" data-category="샷건">
+        <h2 class="section-title">산탄총 - DP12</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -331,8 +364,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 산탄총 - AA12</h2>
+    <div class="section" data-category="샷건">
+        <h2 class="section-title">산탄총 - AA12</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -369,8 +402,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 기관단총 - MP7</h2>
+    <div class="section" data-category="기관단총">
+        <h2 class="section-title">기관단총 - MP7</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -407,8 +440,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 기관단총 - MP5</h2>
+    <div class="section" data-category="기관단총">
+        <h2 class="section-title">기관단총 - MP5</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -445,8 +478,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 기관단총 - 버텍스</h2>
+    <div class="section" data-category="기관단총">
+        <h2 class="section-title">기관단총 - 버텍스</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -473,8 +506,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 소총 - AKM</h2>
+    <div class="section" data-category="소총">
+        <h2 class="section-title">소총 - AKM</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -521,8 +554,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 소총 - SCAR</h2>
+    <div class="section" data-category="소총">
+        <h2 class="section-title">소총 - SCAR</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -549,8 +582,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 소총 - M416</h2>
+    <div class="section" data-category="소총">
+        <h2 class="section-title">소총 - M416</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -587,8 +620,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 저격소총 - M700</h2>
+    <div class="section" data-category="저격소총">
+        <h2 class="section-title">저격소총 - M700</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -615,8 +648,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 저격소총 - AWM</h2>
+    <div class="section" data-category="저격소총">
+        <h2 class="section-title">저격소총 - AWM</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -643,8 +676,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 저격소총 - M821A1</h2>
+    <div class="section" data-category="저격소총">
+        <h2 class="section-title">저격소총 - M821A1</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -671,8 +704,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 경기관총 - MG4</h2>
+    <div class="section" data-category="경기관총">
+        <h2 class="section-title">경기관총 - MG4</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -729,8 +762,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 경기관총 - KVD</h2>
+    <div class="section" data-category="경기관총">
+        <h2 class="section-title">경기관총 - KVD</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -757,8 +790,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 석궁 - 쇠뇌</h2>
+    <div class="section" data-category="석궁">
+        <h2 class="section-title">석궁 - 쇠뇌</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -805,8 +838,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 석궁 - 활</h2>
+    <div class="section" data-category="석궁">
+        <h2 class="section-title">석궁 - 활</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -823,8 +856,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 대형 화기</h2>
+    <div class="section" data-category="대형화기">
+        <h2 class="section-title">대형 화기</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -851,8 +884,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 근접 - 도검</h2>
+    <div class="section" data-category="근접">
+        <h2 class="section-title">근접 - 도검</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -889,8 +922,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 근접 - 곤봉</h2>
+    <div class="section" data-category="근접">
+        <h2 class="section-title">근접 - 곤봉</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -947,8 +980,8 @@
     <br>
     
     <!--  -->
-    <div class="section">
-        <h2 class="section-title">| 근접 - 대형 무기</h2>
+    <div class="section" data-category="근접">
+        <h2 class="section-title">근접 - 대형 무기</h2>
         <div class="item-grid">
             <div class="item">
                 <a href="Template.html">
@@ -984,6 +1017,52 @@
     </div>
 
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuItems = document.querySelectorAll('.menuItem');
+        const container = document.querySelector('.container');
+        
+        menuItems.forEach(function(menuItem) {
+            menuItem.addEventListener('click', function() {
+                const selectedCategory = this.getAttribute('data-category');
+                
+                menuItems.forEach(function(item) {
+                    item.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const allElements = container.children;
+                
+                for (let i = 0; i < allElements.length; i++) {
+                    const element = allElements[i];
+                    
+                    if (element.classList.contains('section')) {
+                        const sectionCategory = element.getAttribute('data-category');
+                        
+                        if (selectedCategory === '전체' |sectionCategory === selectedCategory) {
+                            element.style.display = 'block';
+                        } else {
+                            element.style.display = 'none';
+                        }
+                    } else if (element.tagName === 'BR') {
+                        const prevSection = element.previousElementSibling;
+                        
+                        if (prevSection && prevSection.classList.contains('section')) {
+                            const prevSectionCategory = prevSection.getAttribute('data-category');
+                            
+                            if (selectedCategory === '전체' |prevSectionCategory === selectedCategory) {
+                                element.style.display = 'block';
+                            } else {
+                                element.style.display = 'none';
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
